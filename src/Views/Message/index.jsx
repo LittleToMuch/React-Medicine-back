@@ -86,7 +86,6 @@ export default class Message extends Component {
                     option: (
                         <div>
                             <Button type="primary" id="remmand" size="small" onClick={this.showModal.bind(this, item._id)}>查看评论</Button>
-                            <Button type="danger" id="remmand" size="small">删除全部评论</Button>
                         </div>
                     )
                 }

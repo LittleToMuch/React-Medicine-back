@@ -64,7 +64,7 @@ export default class CommentItem extends Component {
                     }}
                     okText="Yes"
                     cancelText="No"
-                >delete</Popconfirm></span>],
+                >删除</Popconfirm></span>],
                 author: item.username,
                 avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                 content: (

@@ -24,7 +24,7 @@ export default class Headerler extends Component {
                     <h1>中医中药管理系统</h1>
                     <a onClick={this.exitHandle}>退出系统</a>
                     <h2 id="name">{this.state.name}</h2>
-                    <img src=""></img>
+                    <img src="https://ss0.bdstatic.com/6Ox1bjeh1BF3odCf/it/u=733717429,363003047&fm=74&app=80&f=JPEG&size=f121,140?sec=1880279984&t=e781cf317a6ac72636fe1430c476d8aa"></img>
                 </Header>
             </div>
         )
