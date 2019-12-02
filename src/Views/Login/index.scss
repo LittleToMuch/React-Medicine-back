@@ -1,0 +1,30 @@
+ #body{
+   background: rgb(115, 177, 228);
+   overflow: scroll;
+   overflow-y: hidden;
+ }
+ 
+ #medicine{
+   width: 300px;
+   margin: 200px auto;
+   padding: 20px;
+   border: 2px solid rgb(230, 229, 229);
+   background: white;
+   border-radius: 3px;
+
+   h1{
+     font-weight: 900;
+     font-size: 20px;
+     text-align: center;
+   }
+ }
+ 
+ .login-form {
+  max-width: 300px;
+}
+ .login-form-forgot {
+  float: right;
+}
+ .login-form-button {
+  width: 100%;
+}

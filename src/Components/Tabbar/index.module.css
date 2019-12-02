@@ -1,0 +1,19 @@
+.container{
+    height: 100%;
+    width: 256px;
+    background-color: #ccc;
+}
+
+/* NavLink:visited{
+    color: black;
+}
+NavLink:active{
+    color: #1890ff;
+} */
+
+.active{
+    color: black;
+}
+.selectActive{
+    color: cornflowerblue;
+}
