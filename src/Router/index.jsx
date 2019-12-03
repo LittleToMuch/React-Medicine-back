@@ -10,6 +10,7 @@ import Order from "../Views/Order";
 import Comment from "../Views/Comment";
 import Login from "../Views/Login";
 import store from "../Redux/store";
+import DoctorInsert from "../Views/DoctorInsert";
 
 
 const isLogin = () => !!localStorage.getItem("name")
@@ -33,6 +34,7 @@ const router = (
                                     <Route path="/home/user" component={User}/>
                                     <Route path="/home/order" component={Order}/>
                                     <Route path="/home/comment" component={Comment}/>
+                                    <Route path="/home/doctorinsert" component={DoctorInsert}/>
                                     <Redirect from="/home" to="/home/user"/>
                                 </Switch>
                             </Home>
@@ -49,6 +51,20 @@ const router = (
                     } else {
                         return <Redirect to="/login"/>
                     }
+                    // return (
+                    //     <Home {...props}>
+                    //         <Switch>
+                    //             <Route path="/home/doctor" component={Doctor}/>
+                    //             <Route path="/home/medicinal" component={Medicinal}/>
+                    //             <Route path="/home/message" component={Message}/>
+                    //             <Route path="/home/user" component={User}/>
+                    //             <Route path="/home/order" component={Order}/>
+                    //             <Route path="/home/comment" component={Comment}/>
+                    //             <Route path="/home/doctorinsert" component={DoctorInsert}/>
+                    //             <Redirect from="/home" to="/home/user"/>
+                    //         </Switch>
+                    //     </Home>
+                    // )
 
                 }}/>
             <Route path="/login" component={Login}/>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {Layout, Breadcrumb} from "antd"
-import List from '../List'
+import Insert from '../Insert'
 import style from "./index.module.css"
 const {Content} = Layout
-export default class ContentList extends Component {
+export default class ContentList2 extends Component {
     render() {
         return (
             <div className={style.contentlist}>
@@ -21,7 +21,7 @@ export default class ContentList extends Component {
                             minHeight: 620,
                         }}
                     >
-                        <List {...this.props} />
+                        <Insert/>
                     </Content>
                 </Layout>
             </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ContentList from '../../Components/ContentList'
-import {Button, Modal, Input, notification, Icon} from 'antd'
+import {Button, Modal, Input, notification, Icon, Popconfirm, message } from 'antd'
 import Axios from 'axios'
 const columns = [
     {
@@ -24,11 +24,13 @@ const columns = [
 export default class User extends Component {
     state = {
         id: '',
+        index: '',
         data: [],
         visible: false,
         confirmLoading: false,
         newPsw: '',
-        newPsw2: ''
+        newPsw2: '',
+        freeze: false
     };
     componentDidMount() {
         Axios.get('/api/users/list').then(res => {
@@ -93,9 +95,38 @@ export default class User extends Component {
             newPsw2: e.target.value
         })
     };
+    confirm = (e) => {
+        Axios({
+            url: '/api/users/freeze',
+            method: 'put',
+            data: {
+                id: this.state.id,
+                freeze: this.state.freeze
+            }
+        }).then(res => {
+            console.log(res.data)
+            if (res.data.nModified === 1) {
+                this.setState({
+                    freeze: !this.state.freeze,
+                    data: this.state.data.map((item,ind) => ind === this.state.index ? {...item, freeze: this.state.freeze ? 0 : 1} : item)
+                })
+            }
+        })
+        message.success('Click on Yes');
+    }
+
+    cancel = (e) => {
+        message.error('Click on No');
+    }
+    onFreeze = (id, index) => {
+        this.setState({
+            id, index
+        })
+    }
 
     render() {
-        const data = this.state.data.map(item => {
+        console.log(this.state.data)
+        const data = this.state.data.map((item, index) => {
             return (
                 {
                     key: item._id,
@@ -106,7 +137,15 @@ export default class User extends Component {
                         <div>
                             <Button type="primary" id="remmand" size="small" onClick={this.showModal.bind(this, item._id)}>修改</Button>
                             <Button type="danger" id="remmand" size="small">删除</Button>
-                            <Button type="danger" id="remmand" size="small">冻结</Button>
+                            <Popconfirm
+                                title="Are you sure delete this task?"
+                                onConfirm={this.confirm}
+                                onCancel={this.cancel}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <Button type="danger" id="remmand" size="small" onClick={this.onFreeze.bind(this, item._id, index)}>{item.freeze === 0 ? '冻结' : '已冻结'}</Button>
+                            </Popconfirm>
                         </div>
                     )
                 }

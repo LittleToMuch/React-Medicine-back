@@ -21,6 +21,9 @@ export default withRouter(class Tabbar extends Component {
             case 6:
                 this.props.history.push("/home/medicinal");
                 return;
+            case 7:
+                this.props.history.push("/home/doctorinsert");
+                return;
             case 8:
                 this.props.history.push("/home/doctor");
                 return;
