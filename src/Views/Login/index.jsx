@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import "./index.scss";
 import {Form, Icon, Input, Button, Checkbox, notification} from 'antd';
+import {doctorAction, adminAction} from "./action";
+import {connect} from 'react-redux'
 import Axios from "axios";
 
 class Login extends Component {
@@ -10,6 +12,7 @@ class Login extends Component {
     };
     username = React.createRef();
     password = React.createRef();
+
     loginHandle = () => {
         console.log(this.username.current.input.value)
         let [tel, password] = [this.username.current.input.value, this.password.current.input.value]
@@ -21,6 +24,7 @@ class Login extends Component {
             }
         }).then(res => {
             let {login} = res.data
+            let {permission} = res.data.result[0]
             if (login === 1) {
                 notification.open({
                     message: 'tips',
@@ -29,7 +33,17 @@ class Login extends Component {
                     icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
                 });
                 localStorage.setItem("name",res.data.result[0].username)
-                this.props.history.push("/home")
+                switch (permission) {
+                    case 1 :
+                        this.props.doctorAction()
+                        this.props.history.push("/home")
+                        return
+                    case 2 :
+                        this.props.adminAction()
+                        this.props.history.push("/home")
+                        return
+                }
+
             } else {
                 notification.open({
                     message: 'tips',
@@ -110,4 +124,15 @@ class Login extends Component {
     }
 }
 
-export default Form.create({name: "normal_login"})(Login);
+const mapStateToProps = (state) => {
+    return {
+        permission: state.permission
+    }
+}
+
+const mapDispatchToProps = {
+    doctorAction,
+    adminAction
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Form.create({name: "normal_login"})(Login));

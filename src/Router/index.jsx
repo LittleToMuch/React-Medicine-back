@@ -9,33 +9,54 @@ import User from "../Views/User";
 import Order from "../Views/Order";
 import Comment from "../Views/Comment";
 import Login from "../Views/Login";
+import store from "../Redux/store";
+
 
 const isLogin = () => !!localStorage.getItem("name")
+let permission;
+store.subscribe(() => {
+    console.log(store.getState().permission)
+    permission = store.getState().permission
+})
 const router = (
     <Router>
         <App>
             <Switch>
                 <Route path="/home" render={(props) => {
-                    return (
-                        isLogin() ?
-                        <Home {...props}>
-                            <Switch>
-                                <Route path="/home/doctor" component={Doctor}/>
-                                <Route path="/home/medicinal" component={Medicinal}/>
-                                <Route path="/home/message" component={Message}/>
-                                <Route path="/home/user" component={User}/>
-                                <Route path="/home/order" component={Order}/>
-                                <Route path="/home/comment" component={Comment}/>
-                                <Redirect from="/home" to="/home/user"/>
-                            </Switch>
-                        </Home> : <Redirect to="/login"/>
-                    )
+                    if (isLogin() && permission === 2) {
+                        return (
+                            <Home {...props}>
+                                <Switch>
+                                    <Route path="/home/doctor" component={Doctor}/>
+                                    <Route path="/home/medicinal" component={Medicinal}/>
+                                    <Route path="/home/message" component={Message}/>
+                                    <Route path="/home/user" component={User}/>
+                                    <Route path="/home/order" component={Order}/>
+                                    <Route path="/home/comment" component={Comment}/>
+                                    <Redirect from="/home" to="/home/user"/>
+                                </Switch>
+                            </Home>
+                        )
+                    } else if (isLogin() && permission === 1) {
+                        return (
+                            <Home {...props}>
+                                <Switch>
+                                    <Route path="/home/comment" component={Comment}/>
+                                    <Redirect from="/home" to="/home/comment"/>
+                                </Switch>
+                            </Home>
+                        )
+                    } else {
+                        return <Redirect to="/login"/>
+                    }
+
                 }}/>
-                <Route path="/login" component={Login}/>
-                <Redirect from="/" to="/login"/>
-            </Switch>
-        </App>
-    </Router>
+            <Route path="/login" component={Login}/>
+            <Redirect from="/" to="/login"/>
+        </Switch>
+    </App>
+</Router>
 )
+
 
 export default router
