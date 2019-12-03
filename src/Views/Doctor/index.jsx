@@ -14,6 +14,7 @@ export default class Doctor extends Component {
         introduction: '',
         level: '',
         price: '',
+        path: '',
         ModalText: '',
         datalist: [],
         visible: false,
@@ -85,12 +86,12 @@ export default class Doctor extends Component {
             ModalText: '正在提交',
             confirmLoading: true,
         });
-        let {name, department, tags, introduction, level, price} = this.state;
+        let {name, department, tags, introduction, level, price, path} = this.state;
         Axios({
             method: 'put',
             url: '/api/doctor/update',
             data:{
-                id,name,department,tags,introduction,level,price
+                id,name,department,tags,introduction,level,price,pic:path
             }
         }).then(res => {
             if (res.data.update === 1) {
@@ -138,6 +139,11 @@ export default class Doctor extends Component {
     confirm = (id, index) => {
         this.deleteHandle(id, index)
     };
+    onAvatar = (path) => {
+        this.setState({
+            path
+        })
+    }
     render() {
         const data = this.state.datalist.map((item,index) => {
             return (
@@ -195,7 +201,7 @@ export default class Doctor extends Component {
                     标签：<Input placeholder="Basic usage" style={{marginBottom: 16}} onChange={(e) => {
                     this.handleChange('tags', e)
                 }} value={this.state.tags}/>
-                    <Avatar/>
+                    <Avatar onAvatar={this.onAvatar}/>
 
                 </Modal>
                 <ContentList columns={this.state.columns} data={data} ref='qqq'/>

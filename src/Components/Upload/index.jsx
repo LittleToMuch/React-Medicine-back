@@ -25,13 +25,23 @@ class Avatar extends React.Component {
         loading: false,
     };
 
+    componentWillReceiveProps() {
+        this.setState({
+            imageUrl: ''
+        })
+    }
+
     handleChange = info => {
+        console.log(info,'info')
+
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
             return;
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
+            console.log(info.fileList[0].response)
+            this.props.onAvatar(info.fileList[0].response)
             getBase64(info.file.originFileObj, imageUrl =>
                 this.setState({
                     imageUrl,
@@ -55,7 +65,7 @@ class Avatar extends React.Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                action="/api/doctor/upload"
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
             >
